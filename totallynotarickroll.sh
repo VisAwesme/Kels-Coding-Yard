@@ -1,34 +1,23 @@
 #!/bin/bash
 
 # Made By DrKel
-# Please Credit DrKel if reusing in your own scripts (Or VisAwesme or Vaughn R)... not sure why you would wana reuse this script though...
+# You thought it was safe? Nah.
 
-# To run first do this in your CLI: chmod +x totallynotarickroll.sh
-# Then: ./totallynotarickroll.sh
-
-# Fake function 
 initialize_variables() {
   echo "Initializing variables..."
-  local var1="value1"
-  local var2="value2"
   sleep 1
 }
 
-# Fake function
 perform_calculations() {
   echo "Performing calculations..."
-  local result=$((var1 + var2))
   sleep 1
 }
 
-# Fake function
 process_data() {
   echo "Processing data..."
-  local processed_data="processed_$result"
   sleep 1
 }
 
-# Countdown from 10 to 1
 countdown() {
   for i in {10..1}; do
     echo "Counting down: $i"
@@ -36,17 +25,28 @@ countdown() {
   done
 }
 
+spam_lyrics() {
+  while true; do
+    echo "Never gonna give you up"
+    echo "Never gonna let you down"
+    echo "Never gonna run around and desert you"
+    echo "Never gonna make you cry"
+    echo "Never gonna say goodbye"
+    echo "Never gonna tell a lie and hurt you"
+    sleep 0.5
+  done
+}
 
 redirect_to_rickroll() {
   xdg-open "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 }
 
-# Main script execution
 main() {
   initialize_variables
   perform_calculations
   process_data
   countdown
+  spam_lyrics & # Runs in the background
   redirect_to_rickroll
 }
 
