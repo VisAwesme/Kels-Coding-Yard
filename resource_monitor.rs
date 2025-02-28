@@ -1,5 +1,6 @@
 // Made By DrKel
 // Please Credit DrKel if reusing in your own scripts. (Or VisAwesme or Vaughn R)
+// Reminder: This is unfinished and may not work.
 use sysinfo::{System, RefreshKind, CpuRefreshKind};
 use notify_rust::Notification;
 use std::{thread, time::Duration};
