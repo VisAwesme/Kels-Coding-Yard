@@ -285,7 +285,7 @@ try {
     Write-Warning "Failed to list or delete shadow copies: $_"
 }
 
-Write-Host "Aggressive malware removal complete. Get fucked MEMZ.exe, imagine getting pwned by a 16 year old furry >:3c" -ForegroundColor Cyan
+Write-Host "Aggressive malware removal complete. Get fucked MEMZ.exe. >:3c" -ForegroundColor Cyan
 
 <#
 End of aggressive removal script.
