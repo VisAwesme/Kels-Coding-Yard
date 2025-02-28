@@ -28,12 +28,17 @@ countdown() {
 spam_lyrics() {
   while true; do
     echo "Never gonna give you up"
+    sleep 0.083
     echo "Never gonna let you down"
+    sleep 0.083
     echo "Never gonna run around and desert you"
+    sleep 0.083
     echo "Never gonna make you cry"
+    sleep 0.083
     echo "Never gonna say goodbye"
+    sleep 0.083
     echo "Never gonna tell a lie and hurt you"
-    sleep 0.5
+    sleep 0.083
   done
 }
 
