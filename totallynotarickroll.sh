@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# https://www.youtube.com/watch?v=JMJGwVyOerw
 # Made By DrKel
 # You thought it was safe? Nah.
 
