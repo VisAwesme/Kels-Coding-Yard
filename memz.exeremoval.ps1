@@ -4,6 +4,10 @@
 ##################################################### MADE BY DRKEL ####################################################
 ########################################################################################################################
 <#
+.NOTES
+This is still a very heavy work-in-progress.
+Please note, any commented parts of the script are either... more dangerous parts of it, or possibly broken.-
+Please read any following comments to them.
 .IMPORTANT
 Please do NOT run this on your main system, this is not going to save your precious windows 11 system (i hate windows for the life of me)-
 if you downloaded MEMZ.exe on your main system.
@@ -12,12 +16,14 @@ Make sure your VM is secure and run a AntiVirus on your main after downloading M
 .INSTRUCTIONS
 First, please for all that is holy. RUN THIS ON A VM.
 Second, once in the VM or TRIAGE VM. Made a text file and name it "kill.ps1" (DO NOT NAME IT ANYTHING CONTAINING THE WORD "MEMZ" OR "MEMEZ" THE PS1 WILL DELETE ITSELF)-
-- then copy and paste this whole script in there.
+- then copy and paste this whole script in there, before attempting to run, run this in powershell... (line under)
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 Third, go onto github (https://github.com/Dfmaaa/MEMZ-virus), and download that on your VM.
 Fourth, run MEMZ.exe (duh).
 Fifth, most important right click on "kill.ps1" or whatever you named it, and click "Run in PowerShell".-
 You can also just copy this whole script and paste it in a powershell as admin.
 And finally, pray that this will work.
+Also a small reminder, do NOT try and manually kill MEMZ.exe via task manager, doing so will brick the VM (rely on this PS1 to kill it).
 
 #>
 
@@ -279,8 +285,10 @@ try {
 Write-Host "Aggressive malware removal complete. Get fucked MEMZ.exe. >:3c" -ForegroundColor Cyan
 
 pause
-
-<#
-End of aggressive removal script.
-Remember: This script is experimental and destructive. Use only in a secure, isolated environment.
-#>
+########################################################################################################################
+##################################################### END OF SCRIPT ##################################################
+########################################################################################################################
+################################################## MEMZ.EXE DESTORYER ##################################################
+########################################################################################################################
+##################################################### MADE BY DRKEL ####################################################
+########################################################################################################################
