@@ -1,31 +1,45 @@
 ########################################################################################################################
-################################################## MEMZ.EXE DESTORYER ##################################################
+################################################## MEMZ.EXE DESTROYER ##################################################
 ########################################################################################################################
 ##################################################### MADE BY DRKEL ####################################################
 ########################################################################################################################
 <#
 .NOTES
 This is still a very heavy work-in-progress.
-Please note, any commented parts of the script are either... more dangerous parts of it, or possibly broken.-
-Please read any following comments to them.
+Any commented parts of the script indicate either extra dangerous sections or areas that might be unstable.
+Be sure to read the comments and use extreme caution.
 .IMPORTANT
-Please do NOT run this on your main system, this is not going to save your precious windows 11 system (i hate windows for the life of me)-
-if you downloaded MEMZ.exe on your main system.
-Make sure your VM is secure and run a AntiVirus on your main after downloading MEMZ.exe (if your using a TRIAGE VM your fine,-
--and if your using LINUX your also fine, as EXE fies dont work on linux.(Unless you use wine, but how stupid can you be??))
+Do NOT run this on your main system. Use a secure VM (or TRIAGE VM) for safety.
+Remember: if you downloaded MEMZ.exe on your main system, this script isn’t coming to your rescue!
+Make sure your VM is secure and scan your main system with an antivirus afterward.
 .INSTRUCTIONS
-First, please for all that is holy. RUN THIS ON A VM.
-Second, once in the VM or TRIAGE VM. Made a text file and name it "kill.ps1" (DO NOT NAME IT ANYTHING CONTAINING THE WORD "MEMZ" OR "MEMEZ" THE PS1 WILL DELETE ITSELF)-
-- then copy and paste this whole script in there, before attempting to run, run this in powershell... (line under)
-Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-Third, go onto github (https://github.com/Dfmaaa/MEMZ-virus), and download that on your VM.
-Fourth, run MEMZ.exe (duh).
-Fifth, most important right click on "kill.ps1" or whatever you named it, and click "Run in PowerShell".-
-You can also just copy this whole script and paste it in a powershell as admin.
-And finally, pray that this will work.
-Also a small reminder, do NOT try and manually kill MEMZ.exe via task manager, doing so will brick the VM (rely on this PS1 to kill it).
-
+1. RUN THIS ON A VM.
+2. Create a text file named "kill.ps1" (avoid the words "MEMZ" or "MEMEZ" in the filename).
+3. Paste the entire script into the file.
+4. In PowerShell, run:
+   Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+5. Download the original MEMZ files from GitHub (https://github.com/Dfmaaa/MEMZ-virus) on your VM.
+6. Run MEMZ.exe.
+7. Right-click on your "kill.ps1" file and choose "Run in PowerShell" (or run as Administrator in a PowerShell window).
+8. Pray that this aggressive removal works as intended.
+Also, a reminder: do NOT manually kill MEMZ.exe via Task Manager or you might brick your VM.
 #>
+
+# ----- Global Logging Setup -----
+$LogFile = "$env:USERPROFILE\Desktop\memz_removal_log.txt"
+if (Test-Path $LogFile) { Remove-Item $LogFile -Force }
+function Write-Log {
+    param(
+        [string]$Message,
+        [ConsoleColor]$Color = "White"
+    )
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    $line = "$timestamp - $Message"
+    Write-Host $line -ForegroundColor $Color
+    Add-Content -Path $LogFile -Value $line
+}
+
+Write-Log "Starting aggressive MEMZ.exe removal script!" Cyan
 
 # ----- Configuration Section -----
 # Define primary process name variants (wildcards used for matching)
@@ -40,8 +54,7 @@ $processNames = @(
     "memez.exe*",     # Processes starting with memez.exe
     "memz.exe 32*"    # Variations including "32" (e.g., 32-bit)
 )
-
-# Additional variants to target using wildcards
+# Additional variants to target using wildcards for file deletion
 $additionalProcessNames = @(
     "memz*.com", "memez*.com",
     "memz*.bat", "memez*.bat",
@@ -62,18 +75,18 @@ $additionalProcessNames = @(
 )
 $processNames += $additionalProcessNames
 
-# Common files for where viruses are mostly planted.
+# Common file paths where the virus might be lurking.
 $paths = @(
     "$env:USERPROFILE\Downloads\memz*.exe",
     "$env:USERPROFILE\Downloads\memez*.exe",
     "$env:USERPROFILE\Desktop\memz*.exe",
     "$env:USERPROFILE\Desktop\memez*.exe",
     "C:\Windows\System32\memz.exe",   # Exact file name; no wildcards
-    "C:\Windows\System32\memez.exe" # Exact file name; no wildcards (Add a comma at the end if you uncomment the danger zone.)
-   #--!DANGER ZONE!--#
-   # Uncomment these for a possibly dangerous file removal.
-   #"C:\Windows\System32\memz*.exe",
-   #"C:\Windows\System32\memez*.exe"
+    "C:\Windows\System32\memez.exe"     # Exact file name; no wildcards
+    # --!DANGER ZONE!--#
+    # Uncomment the following lines ONLY if you fully understand the risks!
+    # "C:\Windows\System32\memz*.exe",
+    # "C:\Windows\System32\memez*.exe"
 )
 
 # ----- Helper Function: Remove-ProcessPermissions -----
@@ -81,7 +94,7 @@ function Remove-ProcessPermissions {
     param(
         [int]$ProcessId
     )
-    Write-Host "Aggressively removing privileges from process ID $ProcessId..." -ForegroundColor Magenta
+    Write-Log "Aggressively removing privileges from process ID $ProcessId..." Magenta
     try {
         Add-Type -TypeDefinition @"
 using System;
@@ -113,16 +126,15 @@ public class ProcessPrivileges {
     }
 }
 "@
-        # Open target process handle
         $processHandle = [ProcessPrivileges]::OpenProcess([ProcessPrivileges]::PROCESS_QUERY_INFORMATION, $false, $ProcessId)
         if ($processHandle -eq [IntPtr]::Zero) {
-            Write-Output "Failed to open process handle for PID $ProcessId"
+            Write-Log "Failed to open process handle for PID $ProcessId" Yellow
             return
         }
         $tokenHandle = [IntPtr]::Zero
         $result = [ProcessPrivileges]::OpenProcessToken($processHandle, [ProcessPrivileges]::TOKEN_ADJUST_PRIVILEGES -bor [ProcessPrivileges]::TOKEN_QUERY, [ref]$tokenHandle)
         if (-not $result) {
-            Write-Output "Failed to open process token for PID $ProcessId"
+            Write-Log "Failed to open process token for PID $ProcessId" Yellow
             return
         }
         # Disable all privileges for this process token
@@ -132,112 +144,120 @@ public class ProcessPrivileges {
         $tp.Privileges.Attributes = 0  # Remove privilege
         $adjusted = [ProcessPrivileges]::AdjustTokenPrivileges($tokenHandle, $true, [ref]$tp, 0, [IntPtr]::Zero, [IntPtr]::Zero)
         if ($adjusted) {
-            Write-Output "Privileges aggressively removed from PID $ProcessId"
+            Write-Log "Privileges aggressively removed from PID $ProcessId" Green
         } else {
-            Write-Output "Failed to adjust token privileges for PID $ProcessId"
+            Write-Log "Failed to adjust token privileges for PID $ProcessId" Yellow
         }
     } catch {
-        Write-Output "Exception while removing privileges from PID $ProcessId: $_"
+        Write-Log "Exception while removing privileges from PID $ProcessId: $_" Red
     }
+}
+
+# ----- Helper Function: Get-MaliciousProcesses -----
+# Instead of relying on Get-Process with wildcards (which can be iffy due to the .exe suffix),
+# this function filters all running processes by comparing the lower-case process names to our target patterns.
+function Get-MaliciousProcesses {
+    $processedPatterns = $processNames | ForEach-Object { ($_ -replace "\.exe", "").ToLower() }
+    $targetProcesses = Get-Process | Where-Object {
+        $procName = $_.Name.ToLower()
+        foreach ($pattern in $processedPatterns) {
+            if ($procName -like $pattern) { return $true }
+        }
+        return $false
+    }
+    return $targetProcesses
 }
 
 # ----- Main Execution Section -----
 # Ensure running as Administrator
 if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(
     [Security.Principal.WindowsBuiltInRole] "Administrator")) {
-    Write-Error "Run this script as Administrator. Exiting." -ForegroundColor Red
+    Write-Log "Run this script as Administrator. Exiting." Red
     exit 1
 }
 
+# Aggressively hunt for malicious processes!
+Write-Log "Aggressively searching for malicious processes..." Cyan
 $jobs = @()
-Write-Host "Aggressively searching for malicious processes..." -ForegroundColor Cyan
-
-foreach ($name in $processNames) {
-    try {
-        $procs = Get-Process -Name $name -ErrorAction SilentlyContinue
-    } catch {
-        $procs = $null
-    }
-    if ($procs) {
-        foreach ($proc in $procs) {
-            Write-Host "Targeting $($proc.Name) (PID: $($proc.Id)) aggressively." -ForegroundColor Yellow
-            # Forcefully remove privileges from process
-            Remove-ProcessPermissions -ProcessId $proc.Id
-            $job = Start-Job -ScriptBlock {
-                param($pid)
-                try {
-                    # Kill child processes first
-                    $childProcs = Get-CimInstance Win32_Process -Filter "ParentProcessId=$pid" -ErrorAction SilentlyContinue
-                    foreach ($child in $childProcs) {
-                        Stop-Process -Id $child.ProcessId -Force -ErrorAction Stop
-                        Write-Output "Aggressively killed child PID $($child.ProcessId)"
-                    }
-                    # Kill parent process
-                    Stop-Process -Id $pid -Force -ErrorAction Stop
-                    Write-Output "Aggressively killed PID $pid"
-                } catch {
-                    Write-Output "Failed to aggressively kill PID $pid: $_"
+$maliciousProcs = Get-MaliciousProcesses
+if ($maliciousProcs) {
+    foreach ($proc in $maliciousProcs) {
+        Write-Log "Targeting process $($proc.Name) (PID: $($proc.Id)) aggressively." Yellow
+        # Remove privileges to weaken its defenses
+        Remove-ProcessPermissions -ProcessId $proc.Id
+        # Start a background job to kill the process and its child processes
+        $job = Start-Job -ScriptBlock {
+            param($pid)
+            try {
+                # Kill child processes first
+                $childProcs = Get-CimInstance Win32_Process -Filter "ParentProcessId=$pid" -ErrorAction SilentlyContinue
+                foreach ($child in $childProcs) {
+                    Stop-Process -Id $child.ProcessId -Force -ErrorAction Stop
+                    Write-Output "Aggressively killed child PID $($child.ProcessId)"
                 }
-            } -ArgumentList $proc.Id
-            $jobs += $job
-        }
-    } else {
-        Write-Host "No malicious processes found matching: $name" -ForegroundColor Green
+                # Kill the parent process
+                Stop-Process -Id $pid -Force -ErrorAction Stop
+                Write-Output "Aggressively killed PID $pid"
+            } catch {
+                Write-Output "Failed to aggressively kill PID $pid: $_"
+            }
+        } -ArgumentList $proc.Id
+        $jobs += $job
     }
+} else {
+    Write-Log "No malicious processes found matching our criteria." Green
 }
 
 if ($jobs.Count -gt 0) {
-    Write-Host "Waiting for all aggressive kill jobs to complete..." -ForegroundColor Cyan
+    Write-Log "Waiting for all aggressive kill jobs to complete..." Cyan
     Wait-Job -Job $jobs
     foreach ($job in $jobs) {
-        Receive-Job -Job $job
+        Receive-Job -Job $job | ForEach-Object { Write-Log $_ Green }
     }
-    $remaining = @()
-    foreach ($name in $processNames) {
-        $remaining += Get-Process -Name $name -ErrorAction SilentlyContinue
-    }
-    if ($remaining.Count -eq 0) {
-        Write-Host "All memz-related processes have been aggressively terminated." -ForegroundColor Green
+    $remainingProcs = Get-MaliciousProcesses
+    if ($remainingProcs.Count -eq 0) {
+        Write-Log "All memz-related processes have been aggressively terminated." Green
     } else {
-        Write-Warning "Some processes still running—aggressive removal may have failed for a few." -ForegroundColor Red
+        Write-Log "Some processes still running—aggressive removal may have failed for a few." Red
     }
 } else {
-    Write-Host "No malicious processes were found to terminate." -ForegroundColor Green
+    Write-Log "No malicious processes were found to terminate." Green
 }
 
-# Delete the files corresponding to MEMZ variants
+# ----- Delete Malicious Files -----
+Write-Log "Aggressively deleting malicious files..." Cyan
 foreach ($path in $paths) {
     if (Test-Path $path) {
         try {
-            Remove-Item -Path $path -Force
-            Write-Host "Aggressively deleted file: $path" -ForegroundColor Green
+            Remove-Item -Path $path -Force -Recurse
+            Write-Log "Aggressively deleted file: $path" Green
         } catch {
-            Write-Warning "Failed to aggressively delete file: $path" -ForegroundColor Red
+            Write-Log "Failed to aggressively delete file: $path" Red
         }
     }
 }
 
 # ----- Additional Persistence Removal -----
-Write-Host "Aggressively checking for persistence mechanisms..." -ForegroundColor Cyan
+Write-Log "Aggressively checking for persistence mechanisms..." Cyan
 
 # Remove Scheduled Tasks related to memz
 try {
     $tasks = Get-ScheduledTask | Where-Object { $_.TaskName -like "*memz*" -or $_.TaskName -like "*memez*" }
     if ($tasks) {
         foreach ($task in $tasks) {
-            Write-Host "Aggressively removing scheduled task: $($task.TaskName)" -ForegroundColor Yellow
+            Write-Log "Aggressively removing scheduled task: $($task.TaskName)" Yellow
             try {
                 Unregister-ScheduledTask -TaskName $task.TaskName -Confirm:$false -ErrorAction Stop
-                Write-Host "Scheduled task $($task.TaskName) removed aggressively." -ForegroundColor Green
+                Write-Log "Scheduled task $($task.TaskName) removed aggressively." Green
             } catch {
-                Write-Warning "Failed to remove scheduled task $($task.TaskName) aggressively: $_" -ForegroundColor Red
+                Write-Log "Failed to remove scheduled task $($task.TaskName) aggressively: $_" Red
             }
         }
     } else {
-        Write-Host "No scheduled tasks found for memz variants." -ForegroundColor Green
+        Write-Log "No scheduled tasks found for memz variants." Green
     }
 } catch {
-    Write-Warning "Error retrieving scheduled tasks: $_" -ForegroundColor Red
+    Write-Log "Error retrieving scheduled tasks: $_" Red
 }
 
 # Remove Registry Run entries for memz (both HKCU and HKLM)
@@ -252,20 +272,20 @@ foreach ($regPath in $registryPaths) {
             $propNames = ($props | Get-Member -MemberType NoteProperty).Name
             foreach ($entry in $propNames) {
                 if ($entry -match "(?i)memz|memez") {
-                    Write-Host "Aggressively removing registry entry '$entry' from $regPath" -ForegroundColor Yellow
+                    Write-Log "Aggressively removing registry entry '$entry' from $regPath" Yellow
                     try {
                         Remove-ItemProperty -Path $regPath -Name $entry -ErrorAction Stop
-                        Write-Host "Registry entry '$entry' removed aggressively." -ForegroundColor Green
+                        Write-Log "Registry entry '$entry' removed aggressively." Green
                     } catch {
-                        Write-Warning "Failed to remove registry entry '$entry': $_" -ForegroundColor Red
+                        Write-Log "Failed to remove registry entry '$entry': $_" Red
                     }
                 }
             }
         } else {
-            Write-Host "No registry entries found in $regPath for memz variants." -ForegroundColor Green
+            Write-Log "No registry entries found in $regPath for memz variants." Green
         }
     } catch {
-        Write-Warning "Error accessing registry path $regPath: $_" -ForegroundColor Red
+        Write-Log "Error accessing registry path $regPath: $_" Red
     }
 }
 
@@ -273,30 +293,29 @@ foreach ($regPath in $registryPaths) {
 try {
     $shadowCopies = vssadmin list shadows
     if ($shadowCopies) {
-        Write-Host "Shadow copies detected. Aggressively deleting them now! (Data loss guaranteed)" -ForegroundColor Red
+        Write-Log "Shadow copies detected. Aggressively deleting them now! (Data loss guaranteed)" Red
         vssadmin delete shadows /all /quiet
     } else {
-        Write-Host "No shadow copies found." -ForegroundColor Green
+        Write-Log "No shadow copies found." Green
     }
 } catch {
-    Write-Warning "Failed to list or delete shadow copies: $_" -ForegroundColor Red
+    Write-Log "Failed to list or delete shadow copies: $_" Red
 }
 
 # ----- Additional Aggressive Removal Types -----
-
 # Disable Network Adapters
-Write-Host "Disabling network adapters to prevent malware communication..." -ForegroundColor Cyan
+Write-Log "Disabling network adapters to prevent malware communication..." Cyan
 try {
     Get-NetAdapter | ForEach-Object {
         Disable-NetAdapter -Name $_.Name -Confirm:$false -ErrorAction Stop
-        Write-Host "Network adapter $_.Name disabled aggressively." -ForegroundColor Green
+        Write-Log "Network adapter $($_.Name) disabled aggressively." Green
     }
 } catch {
-    Write-Warning "Failed to disable network adapters: $_" -ForegroundColor Red
+    Write-Log "Failed to disable network adapters: $_" Red
 }
 
 # Clear Temporary Files
-Write-Host "Clearing temporary files..." -ForegroundColor Cyan
+Write-Log "Clearing temporary files..." Cyan
 try {
     $tempPaths = @(
         "$env:TEMP\*",
@@ -304,14 +323,14 @@ try {
     )
     foreach ($tempPath in $tempPaths) {
         Remove-Item -Path $tempPath -Force -Recurse -ErrorAction Stop
-        Write-Host "Temporary files in $tempPath cleared aggressively." -ForegroundColor Green
+        Write-Log "Temporary files in $tempPath cleared aggressively." Green
     }
 } catch {
-    Write-Warning "Failed to clear temporary files: $_" -ForegroundColor Red
+    Write-Log "Failed to clear temporary files: $_" Red
 }
 
 # Remove Startup Items related to memz
-Write-Host "Aggressively removing startup items..." -ForegroundColor Cyan
+Write-Log "Aggressively removing startup items..." Cyan
 $startupPaths = @(
     "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run",
     "HKLM:\Software\Microsoft\Windows\CurrentVersion\Run",
@@ -325,20 +344,20 @@ foreach ($startupPath in $startupPaths) {
             $propNames = ($props | Get-Member -MemberType NoteProperty).Name
             foreach ($entry in $propNames) {
                 if ($entry -match "(?i)memz|memez") {
-                    Write-Host "Aggressively removing startup entry '$entry' from $startupPath" -ForegroundColor Yellow
+                    Write-Log "Aggressively removing startup entry '$entry' from $startupPath" Yellow
                     try {
                         Remove-ItemProperty -Path $startupPath -Name $entry -ErrorAction Stop
-                        Write-Host "Startup entry '$entry' removed aggressively." -ForegroundColor Green
+                        Write-Log "Startup entry '$entry' removed aggressively." Green
                     } catch {
-                        Write-Warning "Failed to remove startup entry '$entry': $_" -ForegroundColor Red
+                        Write-Log "Failed to remove startup entry '$entry': $_" Red
                     }
                 }
             }
         } else {
-            Write-Host "No startup entries found in $startupPath for memz variants." -ForegroundColor Green
+            Write-Log "No startup entries found in $startupPath for memz variants." Green
         }
     } catch {
-        Write-Warning "Error accessing startup path $startupPath: $_" -ForegroundColor Red
+        Write-Log "Error accessing startup path $startupPath: $_" Red
     }
 }
 
@@ -354,22 +373,21 @@ foreach ($additionalPath in $additionalPaths) {
     if (Test-Path $additionalPath) {
         try {
             Remove-Item -Path $additionalPath -Force -Recurse
-            Write-Host "Aggressively deleted additional path: $additionalPath" -ForegroundColor Green
+            Write-Log "Aggressively deleted additional path: $additionalPath" Green
         } catch {
-            Write-Warning "Failed to aggressively delete additional path: $additionalPath" -ForegroundColor Red
+            Write-Log "Failed to aggressively delete additional path: $additionalPath" Red
         }
     }
 }
 
 # ----- End of Additional Aggressive Removal Types -----
-
-Write-Host "Aggressive malware removal complete. Get fucked MEMZ.exe. >:3c" -ForegroundColor Cyan
+Write-Log "Aggressive malware removal complete. Get fucked, MEMZ.exe. >:3c" Cyan
 
 pause
 ########################################################################################################################
 ##################################################### END OF SCRIPT ##################################################
 ########################################################################################################################
-################################################## MEMZ.EXE DESTORYER ##################################################
+################################################## MEMZ.EXE DESTROYER ##################################################
 ########################################################################################################################
 ##################################################### MADE BY DRKEL ####################################################
 ########################################################################################################################
