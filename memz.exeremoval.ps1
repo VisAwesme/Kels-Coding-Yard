@@ -7,14 +7,16 @@
 .IMPORTANT
 Please do NOT run this on your main system, this is not going to save your precious windows 11 system (i hate windows for the life of me)-
 if you downloaded MEMZ.exe on your main system.
-Make sure your VM is secure and run a AntiVirus on your main after downloading MEMZ.exe (if your using a TRIAGE VM your fine, and if your using LINUX as EXE fies dont work on linux.)
+Make sure your VM is secure and run a AntiVirus on your main after downloading MEMZ.exe (if your using a TRIAGE VM your fine,-
+-and if your using LINUX your also fine, as EXE fies dont work on linux.(Unless you use wine, but how stupid can you be??))
 .INSTRUCTIONS
 First, please for all that is holy. RUN THIS ON A VM.
 Second, once in the VM or TRIAGE VM. Made a text file and name it "kill.ps1" (DO NOT NAME IT ANYTHING CONTAINING THE WORD "MEMZ" OR "MEMEZ" THE PS1 WILL DELETE ITSELF)-
 - then copy and paste this whole script in there.
 Third, go onto github (https://github.com/Dfmaaa/MEMZ-virus), and download that on your VM.
 Fourth, run MEMZ.exe (duh).
-Fifth, most important right click on "kill.ps1" or whatever you named it.
+Fifth, most important right click on "kill.ps1" or whatever you named it, and click "Run in PowerShell".-
+You can also just copy this whole script and paste it in a powershell as admin.
 And finally, pray that this will work.
 
 #>
@@ -54,14 +56,18 @@ $additionalProcessNames = @(
 )
 $processNames += $additionalProcessNames
 
-# Define common file paths for memz.exe/memez.exe.
+# Common files for where viruses are mostly planted.
 $paths = @(
-    "$env:USERPROFILE\Downloads\memz.exe",
-    "$env:USERPROFILE\Downloads\memez.exe",
-    "$env:USERPROFILE\Desktop\memz.exe",
-    "$env:USERPROFILE\Desktop\memez.exe",
+    "$env:USERPROFILE\Downloads\memz*.exe",
+    "$env:USERPROFILE\Downloads\memez*.exe",
+    "$env:USERPROFILE\Desktop\memz*.exe",
+    "$env:USERPROFILE\Desktop\memez*.exe",
     "C:\Windows\System32\memz.exe",   # Exact file name; no wildcards
-    "C:\Windows\System32\memez.exe"    # Exact file name; no wildcards
+    "C:\Windows\System32\memez.exe" # Exact file name; no wildcards (Add a comma at the end if you uncomment the danger zone.)
+   #--!DANGER ZONE!--#
+   # Uncomment these for a possibly dangerous file removal.
+   #"C:\Windows\System32\memz*.exe",
+   #"C:\Windows\System32\memez*.exe"
 )
 
 # ----- Helper Function: Remove-ProcessPermissions -----
@@ -133,7 +139,7 @@ public class ProcessPrivileges {
 # Ensure running as Administrator
 if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(
     [Security.Principal.WindowsBuiltInRole] "Administrator")) {
-    Write-Error "Run this script as Administrator. Exiting."
+    Write-Error "Run this script as Administrator. Exiting." -ForegroundColor Red
     exit 1
 }
 
@@ -187,7 +193,7 @@ if ($jobs.Count -gt 0) {
     if ($remaining.Count -eq 0) {
         Write-Host "All memz-related processes have been aggressively terminated." -ForegroundColor Green
     } else {
-        Write-Warning "Some processes still running—aggressive removal may have failed for a few."
+        Write-Warning "Some processes still running—aggressive removal may have failed for a few." -ForegroundColor Red
     }
 } else {
     Write-Host "No malicious processes were found to terminate." -ForegroundColor Green
@@ -200,7 +206,7 @@ foreach ($path in $paths) {
             Remove-Item -Path $path -Force
             Write-Host "Aggressively deleted file: $path" -ForegroundColor Green
         } catch {
-            Write-Warning "Failed to aggressively delete file: $path"
+            Write-Warning "Failed to aggressively delete file: $path" -ForegroundColor Red
         }
     }
 }
@@ -218,14 +224,14 @@ try {
                 Unregister-ScheduledTask -TaskName $task.TaskName -Confirm:$false -ErrorAction Stop
                 Write-Host "Scheduled task $($task.TaskName) removed aggressively." -ForegroundColor Green
             } catch {
-                Write-Warning "Failed to remove scheduled task $($task.TaskName) aggressively: $_"
+                Write-Warning "Failed to remove scheduled task $($task.TaskName) aggressively: $_" -ForegroundColor Red
             }
         }
     } else {
         Write-Host "No scheduled tasks found for memz variants." -ForegroundColor Green
     }
 } catch {
-    Write-Warning "Error retrieving scheduled tasks: $_"
+    Write-Warning "Error retrieving scheduled tasks: $_" -ForegroundColor Red
 }
 
 # Remove Registry Run entries for memz (both HKCU and HKLM)
@@ -245,7 +251,7 @@ foreach ($regPath in $registryPaths) {
                         Remove-ItemProperty -Path $regPath -Name $entry -ErrorAction Stop
                         Write-Host "Registry entry '$entry' removed aggressively." -ForegroundColor Green
                     } catch {
-                        Write-Warning "Failed to remove registry entry '$entry': $_"
+                        Write-Warning "Failed to remove registry entry '$entry': $_" -ForegroundColor Red
                     }
                 }
             }
@@ -253,7 +259,7 @@ foreach ($regPath in $registryPaths) {
             Write-Host "No registry entries found in $regPath for memz variants." -ForegroundColor Green
         }
     } catch {
-        Write-Warning "Error accessing registry path $regPath: $_"
+        Write-Warning "Error accessing registry path $regPath: $_" -ForegroundColor Red
     }
 }
 
@@ -267,10 +273,12 @@ try {
         Write-Host "No shadow copies found." -ForegroundColor Green
     }
 } catch {
-    Write-Warning "Failed to list or delete shadow copies: $_"
+    Write-Warning "Failed to list or delete shadow copies: $_" -ForegroundColor Red
 }
 
 Write-Host "Aggressive malware removal complete. Get fucked MEMZ.exe. >:3c" -ForegroundColor Cyan
+
+pause
 
 <#
 End of aggressive removal script.
