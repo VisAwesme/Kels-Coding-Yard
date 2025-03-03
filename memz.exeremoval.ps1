@@ -282,6 +282,87 @@ try {
     Write-Warning "Failed to list or delete shadow copies: $_" -ForegroundColor Red
 }
 
+# ----- Additional Aggressive Removal Types -----
+
+# Disable Network Adapters
+Write-Host "Disabling network adapters to prevent malware communication..." -ForegroundColor Cyan
+try {
+    Get-NetAdapter | ForEach-Object {
+        Disable-NetAdapter -Name $_.Name -Confirm:$false -ErrorAction Stop
+        Write-Host "Network adapter $_.Name disabled aggressively." -ForegroundColor Green
+    }
+} catch {
+    Write-Warning "Failed to disable network adapters: $_" -ForegroundColor Red
+}
+
+# Clear Temporary Files
+Write-Host "Clearing temporary files..." -ForegroundColor Cyan
+try {
+    $tempPaths = @(
+        "$env:TEMP\*",
+        "$env:USERPROFILE\AppData\Local\Temp\*"
+    )
+    foreach ($tempPath in $tempPaths) {
+        Remove-Item -Path $tempPath -Force -Recurse -ErrorAction Stop
+        Write-Host "Temporary files in $tempPath cleared aggressively." -ForegroundColor Green
+    }
+} catch {
+    Write-Warning "Failed to clear temporary files: $_" -ForegroundColor Red
+}
+
+# Remove Startup Items related to memz
+Write-Host "Aggressively removing startup items..." -ForegroundColor Cyan
+$startupPaths = @(
+    "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run",
+    "HKLM:\Software\Microsoft\Windows\CurrentVersion\Run",
+    "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\*",
+    "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\*"
+)
+foreach ($startupPath in $startupPaths) {
+    try {
+        $props = Get-ItemProperty -Path $startupPath -ErrorAction SilentlyContinue
+        if ($props) {
+            $propNames = ($props | Get-Member -MemberType NoteProperty).Name
+            foreach ($entry in $propNames) {
+                if ($entry -match "(?i)memz|memez") {
+                    Write-Host "Aggressively removing startup entry '$entry' from $startupPath" -ForegroundColor Yellow
+                    try {
+                        Remove-ItemProperty -Path $startupPath -Name $entry -ErrorAction Stop
+                        Write-Host "Startup entry '$entry' removed aggressively." -ForegroundColor Green
+                    } catch {
+                        Write-Warning "Failed to remove startup entry '$entry': $_" -ForegroundColor Red
+                    }
+                }
+            }
+        } else {
+            Write-Host "No startup entries found in $startupPath for memz variants." -ForegroundColor Green
+        }
+    } catch {
+        Write-Warning "Error accessing startup path $startupPath: $_" -ForegroundColor Red
+    }
+}
+
+# Additional aggressive deletion from common directories
+$additionalPaths = @(
+    "C:\Program Files\memz*",
+    "C:\Program Files (x86)\memz*",
+    "C:\ProgramData\memz*",
+    "C:\Users\*\AppData\Local\memz*",
+    "C:\Users\*\AppData\Roaming\memz*"
+)
+foreach ($additionalPath in $additionalPaths) {
+    if (Test-Path $additionalPath) {
+        try {
+            Remove-Item -Path $additionalPath -Force -Recurse
+            Write-Host "Aggressively deleted additional path: $additionalPath" -ForegroundColor Green
+        } catch {
+            Write-Warning "Failed to aggressively delete additional path: $additionalPath" -ForegroundColor Red
+        }
+    }
+}
+
+# ----- End of Additional Aggressive Removal Types -----
+
 Write-Host "Aggressive malware removal complete. Get fucked MEMZ.exe. >:3c" -ForegroundColor Cyan
 
 pause
