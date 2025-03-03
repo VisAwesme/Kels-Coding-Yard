@@ -1,38 +1,23 @@
-# kill.ps1
-#.REMINDER-NEEDED
-# For this script to run, run this in powershell as a admin! 
-# Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+########################################################################################################################
+################################################## MEMZ.EXE DESTORYER ##################################################
+########################################################################################################################
+##################################################### MADE BY DRKEL ####################################################
+########################################################################################################################
 <#
-.CREDITS (and the usual stupid humor...)
-If you reuse or remake this script, credit DrKel or visawesme. And if you steal it and claim it as yours, expect a DMCA notice (or at least some serious side-eye).
-Horrible code written by Dr. Kel, who loves VoTV so much they started pretending to be Kel (NOT THE KEL FROM OMORI, THE ONE FROM VOICES OF THE VOID).
--- Yeah, I’m not okay.
-This script is not responsible for any damage to your system, your sanity, or your cat’s trust in you.
-If you experience issues, please contact your local IT department, or better yet, a therapist.
-Seriously, don’t run this on your main machine unless you’re ready for the game "Will it boot tomorrow?"
--[--]---[--]---ACTUAL CODE BEGINS HERE---[--]---[--]-
-.DANGER
-Very dangerous script—this could potentially cause more damage than MEMZ itself.
-If you're running this in VMware or VirtualBox, remember: VM escapes are a thing.
-.Use Triage if you have a lifetime to spare, but don’t be surprised if your account gets an 8-hour review delay.
-.SUPERDUPERIMPORTANT
-This script is intended for highly controlled environments (e.g., a triage VM or a random computer found under a table).
-It forcefully terminates processes, deletes files, and removes persistence mechanisms associated with MEMZ.exe and its variants.
 .IMPORTANT
-Before running, set the execution policy:
-  Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-(Side note: don’t blame me if this turns your computer into a toaster.)
-.SYNOPSIS
-Forcefully terminates all processes matching MEMZ variants, removes persistence mechanisms, and aggressively strips process privileges.
-.DESCRIPTION
-This script hunts for processes with names like MEMZ.exe, memez.exe, etc. It uses background jobs to kill them, attempts to remove all persistence (scheduled tasks, registry entries, and shadow copies), and calls a custom .NET function to strip privileges from those processes.
-.NOTES
-Run this script as Administrator.
-WARNING: This script is like a wrecking ball—you might lose files and system stability you didn’t know you loved.
+Please do NOT run this on your main system, this is not going to save your precious windows 11 system (i hate windows for the life of me)-
+if you downloaded MEMZ.exe on your main system.
+Make sure your VM is secure and run a AntiVirus on your main after downloading MEMZ.exe (if your using a TRIAGE VM your fine, and if your using LINUX as EXE fies dont work on linux.)
+.INSTRUCTIONS
+First, please for all that is holy. RUN THIS ON A VM.
+Second, once in the VM or TRIAGE VM. Made a text file and name it "kill.ps1" (DO NOT NAME IT ANYTHING CONTAINING THE WORD "MEMZ" OR "MEMEZ" THE PS1 WILL DELETE ITSELF)-
+- then copy and paste this whole script in there.
+Third, go onto github (https://github.com/Dfmaaa/MEMZ-virus), and download that on your VM.
+Fourth, run MEMZ.exe (duh).
+Fifth, most important right click on "kill.ps1" or whatever you named it.
+And finally, pray that this will work.
+
 #>
-#.REMINDER-NEEDED
-# For this script to run, run this in powershell as a admin! 
-# Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 # ----- Configuration Section -----
 # Define primary process name variants (wildcards used for matching)
