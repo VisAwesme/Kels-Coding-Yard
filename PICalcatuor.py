@@ -1,3 +1,4 @@
+# THIS SCRIPT IS OUTDATED, THERE WILL BE THIS ON FLATHUB NAMED "PiFlare"
 # Made By DrKel
 # Please Credit DrKel if reusing in your own scripts. (Or VisAwesme or Vaughn R)
 # Warning: This script uses DrKel's top-secret algorithm to approximate pi.
