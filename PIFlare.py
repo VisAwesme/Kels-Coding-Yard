@@ -1,6 +1,36 @@
 #PiFlare
 
+def main():
+
+import subprocess
 import sys
+import time
+
+# Function to install missing dependencies
+def install_dependencies():
+    required_libraries = [
+        'psutil', 'mpmath', 'PyQt6'
+    ]
+    for library in required_libraries:
+        try:
+            # Try importing the library
+            __import__(library)
+        except ImportError:
+            # If the library isn't installed, install it
+            print(f"Installing {library}...")
+            try:
+                subprocess.check_call([sys.executable, "-m", "pip", "install", library])
+                print(f"{library} installed successfully!")
+            except subprocess.CalledProcessError:
+                print(f"Error installing {library}. Please check your network connection or permissions.")
+
+# Install dependencies
+install_dependencies()
+
+# Optional: Delay for the user to see the installation message
+time.sleep(2)
+
+# Now import your actual code dependencies
 import time
 import psutil
 from mpmath import mp, factorial, sqrt
@@ -10,6 +40,7 @@ from PyQt6.QtWidgets import (
     QTextEdit, QProgressBar, QLineEdit, QDialog, QFormLayout, QLineEdit as QLE, 
     QComboBox, QDialogButtonBox
 )
+
 
 # Settings Dialog
 class SettingsDialog(QDialog):
@@ -123,9 +154,9 @@ class PiCalculatorGUI(QWidget):
         self.running = False
         self.start_time = 0
         self.calc_thread = None
-        self.terminal_mode = False  # Classic mode (kinda)
+        self.terminal_mode = False  # Toggle for terminal mode
         
-        # Terminal settings thing
+        # Default settings
         self.settings = {
             "recent_digit_color": "#FF0000",
             "normal_number_color": "#000000",
@@ -156,14 +187,14 @@ class PiCalculatorGUI(QWidget):
         self.terminal_button.clicked.connect(self.toggle_terminal_mode)
         menu_layout.addWidget(self.terminal_button)
         
-        # New super cool settings button I made in 30 minutes!
+        # New: Settings button (small, placed in the same menu)
         self.settings_button = QPushButton("Settings", self)
         self.settings_button.clicked.connect(self.open_settings)
         menu_layout.addWidget(self.settings_button)
 
         main_layout.addLayout(menu_layout)
 
-        # CPU, RAM, Time monitor things (GUI)
+        # Monitor layout (CPU, RAM, Time)
         monitor_layout = QHBoxLayout()
         self.cpu_label = QLabel("CPU: 0%", self)
         monitor_layout.addWidget(self.cpu_label)
@@ -173,14 +204,14 @@ class PiCalculatorGUI(QWidget):
         monitor_layout.addWidget(self.time_label)
         main_layout.addLayout(monitor_layout)
 
-        # Pi display area (you know, the whole purpose of this)
+        # Pi display area
         self.pi_display = QTextEdit(self)
         self.pi_display.setFontFamily("Courier")
         self.pi_display.setFontPointSize(12)
         self.pi_display.setReadOnly(True)
         main_layout.addWidget(self.pi_display)
 
-        # Line counter thing
+        # Line counter
         self.line_counter = QLabel("Lines: 0", self)
         self.line_counter.setStyleSheet("color: purple;")
         main_layout.addWidget(self.line_counter)
@@ -190,7 +221,7 @@ class PiCalculatorGUI(QWidget):
         self.progress_bar.setRange(0, 100)
         main_layout.addWidget(self.progress_bar)
 
-        # Text bar (Entry field)
+        # Digit entry field
         self.digit_entry = QLineEdit(self)
         self.digit_entry.setText("100")
         main_layout.addWidget(self.digit_entry)
@@ -244,7 +275,7 @@ class PiCalculatorGUI(QWidget):
         if self.terminal_mode:
             print(pi_value)
         else:
-            # idk
+            # Use the 'recent_digit_color' from settings for the latest value
             color = self.settings.get("recent_digit_color", "#FF0000")
             formatted_text = f'<span style="color: {color};">{pi_value}</span>'
             self.pi_display.append(formatted_text)
