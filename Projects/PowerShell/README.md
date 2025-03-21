@@ -4,7 +4,7 @@ PowerShell scripts (PS1)
 
 Things you may find here...
 
-- Antivirus (referncing the MEMZ.exe removal)
+- Antivirus (the funny MEMZ.exe removal)
 - Installing scripts
 - Maybe a joke or two?
 
