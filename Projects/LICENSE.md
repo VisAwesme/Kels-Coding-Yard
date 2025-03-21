@@ -12,7 +12,6 @@ For more details, visit: https://creativecommons.org/licenses/by/4.0/
 
 This work may be removed at the author's discretion if proper attribution is not given.
 
-ATTETION, THIS LICENSE IS BEING EDITED. PLEASE REFER TO CCA 4.0.
 
 On readme.mds in folders you may see this badge.
 ![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey)
