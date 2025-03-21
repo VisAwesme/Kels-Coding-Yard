@@ -1,6 +1,6 @@
 # Shell (SH)
 
-Shell scripts, coded in BASH
+Shell scripts (SH), coded in BASH
 
 You may find in this folder
 
