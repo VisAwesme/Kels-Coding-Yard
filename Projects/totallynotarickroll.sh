@@ -5,17 +5,17 @@
 # You thought it was safe? Nah.
 
 initialize_variables() {
-  echo "Initializing variables..."
+  echo "Initializing variables..." #dude i was uncreative okay
   sleep 1
 }
 
 perform_calculations() {
-  echo "Performing calculations..."
+  echo "Performing calculations..." #idk
   sleep 1
 }
 
 process_data() {
-  echo "Processing data..."
+  echo "Processing data..." #amogus
   sleep 1
 }
 
