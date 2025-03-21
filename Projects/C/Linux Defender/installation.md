@@ -16,3 +16,5 @@ gcc -o antivirus antivirus.c -lcurl
 - These are soon too change, as this is V.0.1 (UNTESTED)
   
   3/21/2025 - Last Updated
+
+![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey)
