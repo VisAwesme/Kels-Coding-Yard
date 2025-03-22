@@ -1,6 +1,7 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow, QListWidget, QStackedWidget, QHBoxLayout, QWidget
-from linux_defender_gui_misc import create_settings_page
+# Import the custom page creators
+from linux_defender_gui_misc import create_scan_options_page, create_update_signatures_page, create_settings_page
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -20,14 +21,14 @@ class MainWindow(QMainWindow):
         self.nav_list.addItem("Update Signatures")
         self.nav_list.addItem("Settings")
         self.nav_list.currentRowChanged.connect(self.display_page)
-        main_layout.addWidget(self.nav_list, 1)  # '1' to give it a smaller portion
+        main_layout.addWidget(self.nav_list, 1)  # 1: small portion for nav
         
         # Central area: a stacked widget to switch between pages
         self.stack = QStackedWidget()
-        self.stack.addWidget(create_settings_page("Scan Options"))
-        self.stack.addWidget(create_settings_page("Update Signatures"))
-        self.stack.addWidget(create_settings_page("Settings"))
-        main_layout.addWidget(self.stack, 3)  # '3' gives it more room
+        self.stack.addWidget(create_scan_options_page())
+        self.stack.addWidget(create_update_signatures_page())
+        self.stack.addWidget(create_settings_page())
+        main_layout.addWidget(self.stack, 3)  # 3: gives central area more room
         
         # Start with the first page selected
         self.nav_list.setCurrentRow(0)
