@@ -1,6 +1,6 @@
 # Installation Guide
 
-Hello, and welcome to the unofficial play-off of Windows Defender for Linux! 🚨
+Hello, and welcome to the play-off of Windows Defender for Linux! 🚨
 
 This tool will help you scan files for potential malware using signatures. Let's get you set up with all the necessary dependencies and steps to run it.
 
