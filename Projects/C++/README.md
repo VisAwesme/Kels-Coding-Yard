@@ -1,4 +1,4 @@
-#C++
+# C++
 
 C++ scripts. Because sometimes plain C isn’t cursed enough.
 
