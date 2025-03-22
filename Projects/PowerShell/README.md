@@ -1,13 +1,13 @@
 # PowerShell
 
-PowerShell scripts (PS1)
+PowerShell scripts, because sometimes Windows needs a little... encouragement. Here, you'll find:
 
-Things you may find here...
+- Antivirus scripts – Yes, including MEMZ.exe removal.
 
-- Antivirus (the funny MEMZ.exe removal)
-- Installing scripts
-- Maybe a joke or two?
+- Installation scripts – Automate all the things.
 
-(I am not responsible for any system damage that may have caused by running ANY of my PS1 scripts, that is YOUR fault for not reading through it. Not mine.)
+- Jokes – Not as funny when they break your system.
 
+⚠️ Disclaimer: If my script bricks your OS, that’s your fault for not reading it first. Not mine.
+ 
   ![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey)
