@@ -1,20 +1,52 @@
-Hello! Welcome to uh, a play off of windows defender for linux.
+# Installation Guide
 
-To install any needed depencys run...
+Hello, and welcome to the unofficial play-off of Windows Defender for Linux! 🚨
 
-sudo apt-get install libcurl4-openssl-dev (Ubuntu/apt package manager)
+This tool will help you scan files for potential malware using signatures. Let's get you set up with all the necessary dependencies and steps to run it.
 
-sudo pacman -S libcurl4-openssl-dev (ARCH/pacman package manager - If that doesnt work run 'yay' or 'peru' instead of pacman)
+# Step 1: Install Dependencies
 
-sudo yum install libcurl4-openssl-dev (Fedora/yum package manager)
+Depending on your Linux distribution, use one of the following commands to install the required dependency (libcurl):
+Ubuntu/Debian (apt package manager):
 
-Then once those are installed...
+`sudo apt-get install libcurl4-openssl-dev`
 
-gcc -o antivirus antivirus.c -lcurl
-./antivirus file_to_scan
+Arch Linux (pacman package manager):
 
-- These are soon too change, as this is V.0.1 (UNTESTED)
-  
-  3/21/2025 - Last Updated
+`sudo pacman -S libcurl4-openssl-dev`
+
+If that doesn't work, try:
+
+`yay -S libcurl4-openssl-dev`
+
+or:
+
+`peru -S libcurl4-openssl-dev`
+
+Fedora/CentOS (yum package manager):
+
+`sudo yum install libcurl4-openssl-dev`
+
+# Step 2: Compile the Code
+
+Once the dependencies are installed, let's compile the C program:
+
+`gcc -o antivirus antivirus.c -lcurl`
+
+# Step 3: Run the Malware Scan
+
+Now that you’ve compiled the code, you can run the antivirus scanner:
+
+`./antivirus file_to_scan`
+
+Simply replace file_to_scan with the file you want to scan. (With file path, like ./antivirus /home/drkel/Downloads/DemoMesa.mp4)
+
+Note: These instructions are for Version 0.1 (UNTESTED) — this may change in the future!
+
+# Version Info:
+
+- Last Updated: 3/21/2025
+
+- Current Version: 0.1 (UNTESTED)
 
 ![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey)
