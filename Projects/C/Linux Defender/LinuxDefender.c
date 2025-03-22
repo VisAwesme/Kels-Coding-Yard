@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <curl/curl.h>
-// #include "linux_defender_gui.h" // GUI header - work on this
+// add .py scripts here, idfk im maybe wrong about this
 
 #define SIGNATURE_FILE "malware_signatures.txt"
 
