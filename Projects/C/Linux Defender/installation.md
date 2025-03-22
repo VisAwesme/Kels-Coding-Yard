@@ -39,7 +39,7 @@ Now that you’ve compiled the code, you can run the antivirus scanner:
 
 `./antivirus file_to_scan`
 
-Simply replace file_to_scan with the file you want to scan. (With file path, like ./antivirus /home/drkel/Downloads/DemoMesa.mp4)
+Simply replace file_to_scan with the file you want to scan. (With file path, like `./antivirus /home/drkel/Downloads/DemoMesa.mp4`)
 
 Note: These instructions are for Version 0.1 (UNTESTED) — this may change in the future!
 
