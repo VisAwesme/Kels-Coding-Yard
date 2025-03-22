@@ -7,6 +7,7 @@ This tool will help you scan files for potential malware using signatures. Let's
 # Step 1: Install Dependencies
 
 Depending on your Linux distribution, use one of the following commands to install the required dependency (libcurl):
+
 Ubuntu/Debian (apt package manager):
 
 `sudo apt-get install libcurl4-openssl-dev`
