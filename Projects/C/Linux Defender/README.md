@@ -2,7 +2,7 @@
 
 *A lightweight (or maybe massive?) security tool for Linux systems*
 
- ![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey)
+ ![Linux Defender Public License (LDPL)](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey)
  
 # About
 
