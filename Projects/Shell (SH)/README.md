@@ -1,11 +1,13 @@
 # Shell (SH)
 
-Shell scripts (SH), coded in BASH
+A collection of BASH scripts that may or may not be useful. Expect to find:
 
-You may find in this folder
+- Installation scripts – Because who likes manual setup?
 
-- Installing scripts
-- Unfunny jokes (like the rickroll)
-- And other things idfk how to word them
-  
+- Unfunny jokes – Yes, including a Rickroll.
+
+- Miscellaneous scripts – I have no idea how to categorize them, but they exist.
+
+Execute at your own risk. Seriously.
+
 ![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey)
