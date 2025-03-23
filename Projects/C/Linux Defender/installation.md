@@ -50,4 +50,5 @@ Note: These instructions are for Version 0.1 (UNTESTED) — this may change in t
 
 - Current Version: 0.1 (UNTESTED)
 
-![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey)
+![Static Badge](https://img.shields.io/badge/Linux%20Defender%20Public%20License%20(LDPL)-1?style=flat&label=License&labelColor=grey&color=lightgrey)
+
