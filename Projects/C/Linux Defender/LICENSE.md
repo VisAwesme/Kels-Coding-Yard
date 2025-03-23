@@ -32,3 +32,6 @@ Failure to adhere to these conditions will result in revocation of the permissio
 *Created - 3/22/2025*
 
 *Last updated - N/A*
+
+![Static Badge](https://img.shields.io/badge/Linux%20Defender%20Public%20License%20(LDPL)-1?style=flat&label=License&labelColor=grey&color=lightgrey)
+
