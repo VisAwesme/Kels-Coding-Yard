@@ -2,8 +2,8 @@
 
 *A lightweight (or maybe massive?) security tool for Linux systems*
 
-[ ![Linux Defender Public License (LDPL)](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey)](https://img.shields.io/badge/License%20Linux%20Defender%20Public%20License%20(LDPL)?style=flat&labelColor=lightgrey
-)
+![Static Badge](https://img.shields.io/badge/Linux%20Defender%20Public%20License%20(LDPL)-1?style=flat&label=License&labelColor=grey&color=lightgrey)
+
  
 # About
 
