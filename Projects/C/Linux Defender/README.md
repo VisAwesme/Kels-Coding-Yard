@@ -21,6 +21,8 @@ Linux Defender is an experimental security tool designed to help detect and miti
 
 - **Logging & reports** – Generate reports on system security status (eventually)
 
+- **Auto-Updating malware signuatures** - Uses a API from *https://bazaar.abuse.ch/api/* (eventually)
+
 # Installation & Usage
 
 Since this project is experimental, it’s not recommended for use outside a VM. **See Installation.md** for setup instructions.
