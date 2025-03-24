@@ -27,9 +27,9 @@ Since this project is experimental, it’s not recommended for use outside a VM.
 
 # Version Info
 
-- **Last Updated:** 3/21/2025
+- **Last Updated:** 3/24/2025
 
-- **Current Version:** 0.1 (UNTESTED)
+- **Current Version:** 0.1-2 (UNTESTED)
 
 # Contributing
 
