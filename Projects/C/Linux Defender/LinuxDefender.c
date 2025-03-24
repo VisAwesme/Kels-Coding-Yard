@@ -2,74 +2,54 @@
 #include <stdlib.h>
 #include <string.h>
 #include <curl/curl.h>
-// add .py scripts here, idfk im maybe wrong about this
+#include <openssl/sha.h>
 
-#define SIGNATURE_FILE "malware_signatures.txt"
-
-// Function to write data to a file
-size_t write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) {
-    size_t written = fwrite(ptr, size, nmemb, stream);
-    return written;
-}
-
-// Function to fetch malware signatures from the URL and save to a file
-void fetch_malware_signatures(const char *url) {
-    CURL *curl;
-    FILE *fp;
-    CURLcode res;
-
-    curl = curl_easy_init();
-    if (curl) {
-        fp = fopen(SIGNATURE_FILE, "wb");
-        curl_easy_setopt(curl, CURLOPT_URL, url);
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
-        res = curl_easy_perform(curl);
-        curl_easy_cleanup(curl);
-        fclose(fp);
-    }
-}
-
-// Function to load malware signatures from the file
-char **load_malware_signatures(size_t *count) {
-    FILE *fp = fopen(SIGNATURE_FILE, "r");
-    char **signatures = NULL;
-    char line[256];
-    *count = 0;
-
-    if (fp != NULL) {
-        while (fgets(line, sizeof(line), fp)) {
-            signatures = realloc(signatures, (*count + 1) * sizeof(char *));
-            signatures[*count] = strdup(line);
-            (*count)++;
-        }
-        fclose(fp);
-    }
-
-    return signatures;
-}
-
-// Function to scan a file for malware signatures
-int scan_file(const char *filename, char **signatures, size_t signature_count) {
-    FILE *fp = fopen(filename, "rb");
-    char buffer[1024];
-    size_t bytes_read;
-
-    if (fp == NULL) {
+// Function to compute SHA256 hash of a file
+void compute_sha256_hash(const char *filename, unsigned char *hash) {
+    FILE *file = fopen(filename, "rb");
+    if (!file) {
         perror("Error opening file");
-        return 0;
+        return;
     }
 
-    while ((bytes_read = fread(buffer, 1, sizeof(buffer), fp)) > 0) {
-        for (size_t i = 0; i < signature_count; i++) {
-            if (strstr(buffer, signatures[i])) {
-                fclose(fp);
-                return 1; // Malware found
-            }
+    SHA256_CTX sha256;
+    SHA256_Init(&sha256);
+
+    const int bufSize = 32768;
+    unsigned char *buffer = malloc(bufSize);
+    int bytesRead = 0;
+
+    if (!buffer) {
+        fclose(file);
+        return;
+    }
+
+    while ((bytesRead = fread(buffer, 1, bufSize, file))) {
+        SHA256_Update(&sha256, buffer, bytesRead);
+    }
+
+    SHA256_Final(hash, &sha256);
+
+    fclose(file);
+    free(buffer);
+}
+
+// Updated scan_file function to use SHA256 hashes
+int scan_file(const char *filename, char **signatures, size_t signature_count) {
+    unsigned char hash[SHA256_DIGEST_LENGTH];
+    compute_sha256_hash(filename, hash);
+
+    char hash_string[SHA256_DIGEST_LENGTH * 2 + 1];
+    for (int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
+        sprintf(hash_string + (i * 2), "%02x", hash[i]);
+    }
+
+    for (size_t i = 0; i < signature_count; i++) {
+        if (strcmp(hash_string, signatures[i]) == 0) {
+            return 1; // Malware found
         }
     }
 
-    fclose(fp);
     return 0; // No malware found
 }
 
