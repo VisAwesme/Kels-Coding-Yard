@@ -1,3 +1,6 @@
+# Made by DrKel
+# Not tested yet... uh, pls use at own risk
+
 import os
 
 SERVICE_PATH = "/etc/systemd/system/arch-auto-update.service"
