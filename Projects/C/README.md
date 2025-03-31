@@ -2,7 +2,7 @@
 
 C programs that could range from useful tools to cursed experiments. Expect to find:
 
-- Antivirus tools – Yes, even for Linux.
+- A OS (operating system)? - Maybe, dont expect it to work at all.
 
 - Various applications – Maybe useful, maybe not.
 
