@@ -47,4 +47,5 @@ License 📝
 This project is licensed under the MIT License. See LICENSE for more information.
 
 Made with love (and a bit of chaos) by Kel 🖤
+
 "Because you shouldn't trust that one guy who uses Windows." 💀
