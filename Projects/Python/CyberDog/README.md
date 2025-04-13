@@ -1,6 +1,6 @@
-# CyberDog Sentinel – Master Controller 🐕‍🦺💻
+# CyberDog Sentinel – Master Controller 
 
-Welcome to **CyberDog Sentinel**! 🐾 A highly unhinged but surprisingly effective set of scripts designed to keep watch over your home network, scan for devices, and keep things in check with the occasional rogue device removal (because why not?). All powered by **Python** and **bash**. A must-have for your home network security *if* you're into the whole chaotic-but-functional approach to cybersecurity. 🧑‍💻
+Welcome to **CyberDog Sentinel**! 🐾 A highly unhinged but surprisingly effective set of scripts designed to keep watch over your home network, scan for devices, and keep things in check with the occasional rogue device removal (because why not?). All powered by **Python** and **bash**. A must-have for your home network security *if* you're into the whole chaotic-but-functional approach to cybersecurity. 
 
 ## Features 🚀
 
