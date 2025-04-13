@@ -28,7 +28,7 @@ Before using **CyberDog Sentinel**, make sure you have the following installed:
    git clone https://github.com/yourusername/CyberDog-Sentinel.git
    cd CyberDog-Sentinel
 
-    Install dependencies:
+Install dependencies:
 
 sudo apt install nmap iproute2 net-tools (Ubuntu/Debian package manager, im too lazy to add the rest)
 
