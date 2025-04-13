@@ -30,8 +30,8 @@ def main():
         print("[+] Logging connected devices...")
         device_logger.log_devices()
 
-        print("[+] Checking for rogue devices...")
-        rogue_kicker.check_and_ban()
+      #  print("[+] Checking for rogue devices...")
+      #  rogue_kicker.check_and_ban()
 
         print(f"[*] Sleeping for {SCAN_INTERVAL} seconds...\n")
         time.sleep(SCAN_INTERVAL)
