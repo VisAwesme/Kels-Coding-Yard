@@ -3,7 +3,8 @@
 # import subprocess
 
 # a list of known allowed MAC addresses (add your legit ones)
-'''
+#run get_my_mac.sh to find out YOUR MAC
+"""
 
 SAFE_MACS = ["00:11:22:33:44:55", "AA:BB:CC:DD:EE:FF"]
 
@@ -24,5 +25,7 @@ def check_and_ban():
            print(f"[!] Rogue MAC detected: {mac}")
             Block device (ARP table attack)
           subprocess.call(["arptables", "-A", "OUTPUT", "--destination-mac", mac, "-j", "DROP"])
+
+"""
                         
                         
