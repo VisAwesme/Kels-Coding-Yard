@@ -23,13 +23,14 @@ Before using **CyberDog Sentinel**, make sure you have the following installed:
 ## Setup 🚧
 
 1. Clone the repo:
+   
 (just download it using this https://download-directory.github.io/)
 
-Install dependencies:
+2. Install dependencies:
 
 sudo apt install nmap iproute2 net-tools (Ubuntu/Debian package manager, im too lazy to add the rest)
 
-Run the master controller:
+3. Run the master controller:
 
     python3 cyberdog_sentinel.py
 
