@@ -4,7 +4,7 @@ import time
 import subprocess
 from modules import network_scanner, port_watcher, device_logger, rogue_kicker
 
-SCAN_INTERVAL = 300  # 5 minutes
+SCAN_INTERVAL = 300  # 5 minutes - if you can count
 
 def banner():
     print(r"""
