@@ -23,10 +23,7 @@ Before using **CyberDog Sentinel**, make sure you have the following installed:
 ## Setup 🚧
 
 1. Clone the repo:
-
-   ```bash
-   git clone https://github.com/yourusername/CyberDog-Sentinel.git
-   cd CyberDog-Sentinel
+(just download it using this https://download-directory.github.io/)
 
 Install dependencies:
 
