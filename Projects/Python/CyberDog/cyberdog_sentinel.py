@@ -15,7 +15,7 @@ def banner():
     ╚██████╔╝╚██████╔╝██║     ██║     ╚██████╔╝╚██████╔╝╚██████╔╝
      ╚═════╝  ╚═════╝ ╚═╝     ╚═╝      ╚═════╝  ╚═════╝  ╚═════╝
     """)
-
+# i dont even know wtf this says - ill maybe fix this later
 def main():
     banner()
     print("[*] Starting CyberDog Sentinel 9000...")
