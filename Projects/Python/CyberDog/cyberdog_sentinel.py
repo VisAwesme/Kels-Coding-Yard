@@ -2,7 +2,7 @@
 import os
 import time
 import subprocess
-from modules import network_scanner, port_watcher, device_logger, rogue_kicker
+from modules import network_scanner.py, port_watcher.py, device_logger.py, rogue_kicker.py
 
 SCAN_INTERVAL = 300  # 5 minutes - if you can count
 
