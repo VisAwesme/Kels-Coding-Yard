@@ -30,8 +30,8 @@ https://download-directory.github.io/
 
 3. Install dependencies:
 
-`sudo apt install nmap iproute2 net-tools` (Ubuntu/Debian/Kali Linux package manager)
-`sudo pacman -S nmap iproute2 net-tools` (Arch/Pacman/BlackArch Linux package manager)
+- `sudo apt install nmap iproute2 net-tools` (Ubuntu/Debian/Kali Linux package manager)
+- `sudo pacman -S nmap iproute2 net-tools` (Arch/Pacman/BlackArch Linux package manager)
 
 3. Run the master controller:
 
@@ -39,11 +39,11 @@ https://download-directory.github.io/
 
 ## Usage ⚙️
 
- CyberDog Sentinel will start running and periodically scan your network for devices, watch open ports, and log connected devices.
+ - CyberDog Sentinel will start running and periodically scan your network for devices, watch open ports, and log connected devices.
 
- If any unauthorized device is detected, it will be blocked from the network.
+ - If any unauthorized device is detected, it will be blocked from the network.
 
- Logs are saved in the logs/ directory for review.
+ - Logs are (hopefully) saved in the logs/ directory for review.
 
 ## License 📝
 
