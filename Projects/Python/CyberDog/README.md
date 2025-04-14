@@ -26,7 +26,7 @@ Before using **CyberDog Sentinel**, make sure you have the following installed:
    
 (Note - Dont clone the whole repo, just use the link below to download ONLY this file.)
 
-`https://download-directory.github.io/`
+https://download-directory.github.io/
 
 3. Install dependencies:
 
