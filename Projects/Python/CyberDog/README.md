@@ -24,9 +24,10 @@ Before using **CyberDog Sentinel**, make sure you have the following installed:
 
 1. Clone the repo:
 (Note - Dont clone the whole repo, just use the link below to download ONLY this file.)
+
 `https://download-directory.github.io/`
 
-2. Install dependencies:
+3. Install dependencies:
 
 `sudo apt install nmap iproute2 net-tools` (Ubuntu/Debian/Kali Linux package manager)
 `sudo pacman -S nmap iproute2 net-tools` (Arch/Pacman/BlackArch Linux package manager)
