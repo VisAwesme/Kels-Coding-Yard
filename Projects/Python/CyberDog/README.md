@@ -14,7 +14,7 @@ Welcome to **CyberDog Sentinel**! 🐾 A highly unhinged but surprisingly effect
 
 Before using **CyberDog Sentinel**, make sure you have the following installed:
 
-- Python 3.x
+- `Python 3.x`
 - `nmap` (for network scanning)
 - `ss` (for port monitoring)
 - `arp` (for device logging)
@@ -23,26 +23,27 @@ Before using **CyberDog Sentinel**, make sure you have the following installed:
 ## Setup 🚧
 
 1. Clone the repo:
-   
-(just download it using this https://download-directory.github.io/)
+(Note - Dont clone the whole repo, just use the link below to download ONLY this file.)
+`https://download-directory.github.io/`
 
 2. Install dependencies:
 
-sudo apt install nmap iproute2 net-tools (Ubuntu/Debian package manager, im too lazy to add the rest)
+`sudo apt install nmap iproute2 net-tools` (Ubuntu/Debian/Kali Linux package manager)
+`sudo pacman -S nmap iproute2 net-tools` (Arch/Pacman/BlackArch Linux package manager)
 
 3. Run the master controller:
 
-    python3 cyberdog_sentinel.py
+   ` python3 cyberdog_sentinel.py`
 
-Usage ⚙️
+## Usage ⚙️
 
-    CyberDog Sentinel will start running and periodically scan your network for devices, watch open ports, and log connected devices.
+ CyberDog Sentinel will start running and periodically scan your network for devices, watch open ports, and log connected devices.
 
-    If any unauthorized device is detected, it will be blocked from the network.
+ If any unauthorized device is detected, it will be blocked from the network.
 
-    Logs are saved in the logs/ directory for review.
+ Logs are saved in the logs/ directory for review.
 
-License 📝
+## License 📝
 
 This project is licensed under the MIT License. See LICENSE for more information.
 
