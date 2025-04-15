@@ -1,12 +1,14 @@
-# WARNING - THIS HAS BEEN DISABLED FOR YOUR SAFETY OF YOUR DEVICES 
+# WARNING: This script is intended for use on networks you own or administratively control.
+# Unauthorized use of this script to block devices on public or unauthorized networks 
+# may violate cybercrime laws such as the Computer Fraud and Abuse Act (CFAA) in the U.S. 
+# or the Computer Misuse Act 1990 in the U.K. Use responsibly and ethically.
+# The authors of this script are not responsible for any misuse or legal consequences.
 
 import subprocess
 
 # a list of known allowed MAC addresses (add your legit ones)
 # run get_my_mac.sh to find out YOUR MAC
-# this script might actually break devices- idfk never tried it out... and erm isnt this LEGIT just a cyber crime if you use this in public
 """
-
 SAFE_MACS = ["00:11:22:33:44:55", "AA:BB:CC:DD:EE:FF"]
 
 def get_mac_table():
