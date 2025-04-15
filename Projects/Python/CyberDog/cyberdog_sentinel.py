@@ -33,6 +33,8 @@ def main():
 
       #  print("[+] Checking for rogue devices...")
       #  rogue_kicker.check_and_ban()
+      #  uncomment these, ONLY if you set the safe MACs on E V E R Y device in your household - i know its inefficent
+      #  and i dont have a "mac scanner" for this... but uh, that can be used for mac spoofing so no.
 
         print(f"[*] Sleeping for {SCAN_INTERVAL} seconds...\n")
         time.sleep(SCAN_INTERVAL)
