@@ -1,9 +1,10 @@
 # WARNING - THIS HAS BEEN DISABLED FOR YOUR SAFETY OF YOUR DEVICES 
 
-# import subprocess
+import subprocess
 
 # a list of known allowed MAC addresses (add your legit ones)
-#run get_my_mac.sh to find out YOUR MAC
+# run get_my_mac.sh to find out YOUR MAC
+# this script might actually break devices- idfk never tried it out... and erm isnt this LEGIT just a cyber crime if you use this in public
 """
 
 SAFE_MACS = ["00:11:22:33:44:55", "AA:BB:CC:DD:EE:FF"]
