@@ -2,7 +2,8 @@
 import os
 import time
 import subprocess
-from modules import network_scanner.py, port_watcher.py, device_logger.py, rogue_kicker.py
+from modules import network_scanner, port_watcher, device_logger, rogue_kicker
+# note to self - dont fucking add .py to the end of the modules... thats just a syntax error
 
 SCAN_INTERVAL = 300  # 5 minutes - if you can count
 
