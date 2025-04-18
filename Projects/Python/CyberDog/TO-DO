@@ -1,9 +1,0 @@
-fix/to-do list for `CyberDog`
-
-[-TO-DO-]
-
-make the [SAFE_MACS] in the rogue kicker a .conf file instead (to make it safer)
-
-[-FIX-]
-
-main .py script doesnt work/show menu on kali linux only opens nmap--will try and fix later
