@@ -18,7 +18,7 @@ Make sure your VM is secure and scan your main system with an antivirus afterwar
 3. Paste the entire script into the file.
 4. In PowerShell, run:
    Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-5. Download the original MEMZ files from GitHub (https://github.com/Dfmaaa/MEMZ-virus) on your VM.
+5. Download the original MEMZ files from GitHub (https://github.com/Dfmaaa/MEMZ-virus) on your VM (Reminder- These github viruses may get removed, so reccomend searching for them).
 6. Run MEMZ.exe.
 7. Right-click on your "kill.ps1" file and choose "Run in PowerShell" (or run as Administrator in a PowerShell window).
 8. Pray that this aggressive removal works as intended.
